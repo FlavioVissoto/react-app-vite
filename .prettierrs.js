@@ -4,10 +4,10 @@ module.exports = {
   singleQuote: true,
   semi: true,
   bracketSpacing: true,
-  arrowParens: 'always',
-  trailingComma: 'es5',
+  arrowParens: "always",
+  trailingComma: "es5",
   bracketSameLine: true,
   printWidth: 140,
-  endOfLine: 'auto',
+  endOfLine: "auto",
   code: 140,
 };

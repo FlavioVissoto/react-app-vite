@@ -1,4 +1,17 @@
-export const Size = {
+import { ObjectValues } from '../../../shared/object-values';
+
+export const sizeName = {
+  '3xs': '3xs',
+  '2xs': '2xs',
+  xs: 'xs',
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+  xl: 'xl',
+  '2xl': '2xl',
+} as const;
+
+export const sizeValue = {
   '3xs': '0.25rem',
   '2xs': '0.5rem',
   xs: '0.75rem',
@@ -8,3 +21,5 @@ export const Size = {
   xl: '1.25rem',
   '2xl': '1.5rem',
 } as const;
+
+export type SizeType = ObjectValues<typeof sizeName>;

@@ -4,7 +4,16 @@ import { FormGroup } from '../../components/form-group/form-group';
 import { InputText } from '../../components/input-text/input-text';
 import { Line } from '../../components/line/line';
 import { Link } from '../../components/link/link';
-import { BoxPassword, BoxSocial, LoginCard, LoginMain, LoginSubTitle, LoginTitle, ShowPassword } from '../../styles/login.styles';
+import {
+  BoxCreateAccount,
+  BoxPassword,
+  BoxSocial,
+  LoginCard,
+  LoginMain,
+  LoginSubTitle,
+  LoginTitle,
+  ShowPassword,
+} from '../../styles/login.styles';
 
 const LoginViewer = () => {
   return (
@@ -15,19 +24,19 @@ const LoginViewer = () => {
           <LoginSubTitle>Informe seu email e senha para acessar</LoginSubTitle>
 
           <FormGroup title="Endereço de email">
-            <InputText type="email" placeholder="app@yourmail.com"></InputText>
+            <InputText type="email" placeholder="email@seuemail.com"></InputText>
           </FormGroup>
 
           <FormGroup title="Senha">
             <InputText type="password" placeholder="*********"></InputText>
             <ShowPassword>
-              <span>show</span>
+              <span>Mostrar</span>
             </ShowPassword>
           </FormGroup>
 
           <FormGroup>
             <BoxPassword>
-              <Checkbox label="Lembrar senha"></Checkbox>
+              <Checkbox id="rememberPassword" themeSize="md" label="Lembrar senha"></Checkbox>
               <Link href="#">Esqueceu a senha?</Link>
             </BoxPassword>
             <Button color="blue" type="button">
@@ -43,9 +52,9 @@ const LoginViewer = () => {
             <Button color="blue">Twitter</Button>
           </BoxSocial>
 
-          <FormGroup>
+          <BoxCreateAccount>
             Não tem uma conta? <Link href="#">Crie uma conta</Link>
-          </FormGroup>
+          </BoxCreateAccount>
         </LoginMain>
       </LoginCard>
     </>

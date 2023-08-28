@@ -1,9 +1,9 @@
 import { colors } from './colors.theme';
 import { fonts } from './fonts.theme';
-import { Size } from './size.theme';
+import { sizeValue } from './size.theme';
 
 export const theme = {
-  colors: colors,
+  colors,
   fonts,
-  size: Size,
+  size: sizeValue,
 };

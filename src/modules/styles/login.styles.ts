@@ -25,7 +25,7 @@ export const LoginMain = styled.div`
   background-color: ${(x) => x.theme.colors.white};
   padding: ${(x) => x.theme.size['2xl']} ${(x) => x.theme.size.md};
 
-  @media only screen and (${device.tablet}) {
+  @media only screen and (${device.mobileL}) {
     width: 420px;
   }
 `;
@@ -55,8 +55,8 @@ export const ShowPassword = styled.div`
 
 export const BoxPassword = styled.div`
   display: flex;
-  flex-direction: column;
-  row-gap: ${(x) => x.theme.size.xs};
+  align-items: center;
+  justify-content: space-between;
 
   margin-bottom: ${(x) => x.theme.size.md};
 `;
@@ -65,4 +65,23 @@ export const BoxSocial = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: ${(x) => x.theme.size['2xs']};
+
+  @media only screen and (${device.mobileL}) {
+    flex-direction: row;
+    column-gap: ${(x) => x.theme.size['2xs']};
+  }
+`;
+
+export const BoxCreateAccount = styled.div`
+  margin-top: ${(x) => x.theme.size.md};
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: ${(x) => x.theme.size['2xs']};
+
+  ${(x) => x.theme.fonts.size.sm}
+  @media only screen and (${device.mobileL}) {
+    ${(x) => x.theme.fonts.size.base}
+  }
 `;

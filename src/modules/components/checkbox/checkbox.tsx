@@ -1,12 +1,14 @@
 import { FC, InputHTMLAttributes } from 'react';
 
+import { SizeType } from '../../styles/theme/size.theme';
 import { BoxCheckbox, CheckboxContainer, Label } from './checkbox.style';
 
-export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxPropsType extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  themeSize: SizeType;
 }
 
-export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
+export const Checkbox: FC<CheckboxPropsType> = (props: CheckboxPropsType) => {
   return (
     <CheckboxContainer>
       <BoxCheckbox type="checkbox" {...props} id={props.id} />

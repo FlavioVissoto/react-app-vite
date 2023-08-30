@@ -1,9 +1,9 @@
-import { AppContainer, AppContent, AppWrapper } from './modules/styles/container';
-
+import { Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+
+import { AppContainer, AppContent, AppWrapper } from './modules/styles/container';
 import { GlobalStyle } from './modules/styles/global.style';
 import { theme } from './modules/styles/theme/theme';
-import LoginViewer from './modules/viewes/login/login';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <AppContainer>
         <AppContent>
           <AppWrapper>
-            <LoginViewer />
+            <Outlet />
           </AppWrapper>
         </AppContent>
       </AppContainer>

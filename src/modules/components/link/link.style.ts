@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { device } from '../../styles/theme/devices';
 
-export const BoxLink = styled.a`
+export const BoxLink = styled(Link)`
   width: auto;
   text-decoration: none;
   cursor: pointer;

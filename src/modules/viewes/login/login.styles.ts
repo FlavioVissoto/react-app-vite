@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { device } from './theme/devices';
+import { device } from '../../styles/theme/devices';
 
 export const LoginCard = styled.div`
   min-height: 100vh;

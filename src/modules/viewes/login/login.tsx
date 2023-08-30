@@ -4,16 +4,7 @@ import { FormGroup } from '../../components/form-group/form-group';
 import { InputText } from '../../components/input-text/input-text';
 import { Line } from '../../components/line/line';
 import { Link } from '../../components/link/link';
-import {
-  BoxCreateAccount,
-  BoxPassword,
-  BoxSocial,
-  LoginCard,
-  LoginMain,
-  LoginSubTitle,
-  LoginTitle,
-  ShowPassword,
-} from '../../styles/login.styles';
+import { BoxCreateAccount, BoxPassword, BoxSocial, LoginCard, LoginMain, LoginSubTitle, LoginTitle, ShowPassword } from './login.styles';
 
 const LoginViewer = () => {
   return (
@@ -53,7 +44,7 @@ const LoginViewer = () => {
           </BoxSocial>
 
           <BoxCreateAccount>
-            Não tem uma conta? <Link href="#">Crie uma conta</Link>
+            Não tem uma conta? <Link href="/create-account">Crie uma conta</Link>
           </BoxCreateAccount>
         </LoginMain>
       </LoginCard>

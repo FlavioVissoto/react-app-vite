@@ -9,7 +9,7 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 export const Link: FC<LinkProps> = (props: LinkProps) => {
   return (
     <>
-      <BoxLink {...props}>{props.children}</BoxLink>
+      <BoxLink to={props.href ?? '#'}>{props.children}</BoxLink>
     </>
   );
 };

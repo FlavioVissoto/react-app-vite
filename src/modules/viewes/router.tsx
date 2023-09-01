@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from '../../App';
+import { RequireAuth } from '../../contexts/auth/require-auth';
 import CreateAccount from './create-account/CreateAccount';
 import Error404 from './error/404';
 import Home from './home/home';
@@ -14,11 +15,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Home />,
+        element: (
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        ),
       },
       {
         path: 'home',
-        element: <Home />,
+        element: (
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        ),
       },
       {
         path: 'login',

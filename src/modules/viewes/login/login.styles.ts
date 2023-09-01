@@ -19,8 +19,8 @@ export const LoginCard = styled.div`
 
 export const LoginMain = styled.div`
   width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px ${(x) => x.theme.colors.gray[400]};
+  border-radius: ${(x) => x.theme.size['2xs']};
+  box-shadow: 0 0 ${(x) => x.theme.size.lg} ${(x) => x.theme.colors.gray[400]};
   margin: 0 auto;
   background-color: ${(x) => x.theme.colors.white};
   padding: ${(x) => x.theme.size['2xl']} ${(x) => x.theme.size.md};

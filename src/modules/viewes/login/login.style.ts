@@ -17,7 +17,7 @@ export const LoginCard = styled.div`
   }
 `;
 
-export const LoginMain = styled.div`
+export const LoginContent = styled.div`
   width: 100%;
   border-radius: ${(x) => x.theme.size['2xs']};
   box-shadow: 0 0 ${(x) => x.theme.size.lg} ${(x) => x.theme.colors.gray[400]};
@@ -30,15 +30,8 @@ export const LoginMain = styled.div`
   }
 `;
 
-export const LoginTitle = styled.h3`
-  ${(props) => props.theme.fonts.size['2xl']};
-  margin-bottom: 5px;
-`;
-
-export const LoginSubTitle = styled.p`
+export const LoginMain = styled.form`
   margin-bottom: ${(x) => x.theme.size.md};
-  color: ${(props) => props.theme.colors.gray[400]};
-  ${(props) => props.theme.fonts.size.sm};
 `;
 
 export const ShowPassword = styled.div`

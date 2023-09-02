@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from '../../App';
 import { RequireAuth } from '../../contexts/auth/require-auth';
-import CreateAccount from './create-account/CreateAccount';
+import CreateAccount from './create-account/create-account';
 import Error404 from './error/404';
 import Home from './home/home';
 import LoginViewer from './login/login';

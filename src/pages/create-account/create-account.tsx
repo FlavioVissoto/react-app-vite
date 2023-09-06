@@ -118,6 +118,7 @@ const CreateAccount = () => {
                     name="cpf"
                     id="cpf"
                     type="text"
+                    mask="cpf"
                     placeholder="xxx.xxx.xxx-xx"></Form.InputText>
                 </Form.FormGroup>
                 <Form.FormGroup
@@ -129,7 +130,8 @@ const CreateAccount = () => {
                     name="phone"
                     id="phone"
                     type="text"
-                    placeholder="+55 (xx) xxxxx-xxxx"></Form.InputText>
+                    mask="phone"
+                    placeholder="+xx (xx) xxxxx-xxxx"></Form.InputText>
                 </Form.FormGroup>
               </InLineItens>
 

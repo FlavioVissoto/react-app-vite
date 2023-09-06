@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { color } from '../../../modules/styles/theme/colors.theme';
+import { color } from '../../../styles/theme/colors.theme';
 import { BoxButton } from './button.style';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

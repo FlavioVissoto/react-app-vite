@@ -15,6 +15,19 @@ export const InLineItens = styled.div`
   column-gap: ${(x) => x.theme.size.md};
 `;
 
+export const InputPassContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: ${(x) => x.theme.size['2xs']};
+`;
+
+export const InputPass = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const LabelShowPass = styled(ShowPassword)``;
 
 export const Terms = styled.div`

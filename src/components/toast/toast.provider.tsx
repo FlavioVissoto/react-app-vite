@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Toast, ToastProps } from '../../modules/components/toast/toast';
-import { ToastWrapper } from '../../modules/components/toast/toast.style';
+import { Toast, ToastProps } from '../../components/toast/toast';
+import { ToastWrapper } from '../../components/toast/toast.style';
 import { ToastContext } from './toast.context';
 
 const generateID = (): string => {

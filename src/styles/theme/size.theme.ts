@@ -11,7 +11,8 @@ export const sizeName = {
   '2xl': '2xl',
 } as const;
 
-export const sizeValue = {
+export const size = {
+  '4xs': '0.15rem',
   '3xs': '0.25rem',
   '2xs': '0.5rem',
   xs: '0.75rem',

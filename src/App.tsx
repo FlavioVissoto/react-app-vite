@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { ToastProvider } from './contexts/toast/toast.provider';
-import { AppContainer, AppContent, AppWrapper } from './modules/styles/container';
-import { GlobalStyle } from './modules/styles/global.style';
-import { theme } from './modules/styles/theme/theme';
+import { ToastProvider } from './components/toast/toast.provider';
+import { AppContainer, AppContent, AppWrapper } from './styles/container';
+import { GlobalStyle } from './styles/global.style';
+import { theme } from './styles/theme/theme';
 
 function App() {
   return (

@@ -34,10 +34,16 @@ export const LoginMain = styled.form`
   margin-bottom: ${(x) => x.theme.size.md};
 `;
 
+export const InputPass = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ShowPassword = styled.div`
   position: absolute;
-  top: 50%;
-  right: 1rem;
+  right: ${(x) => x.theme.size.xs};
 
   span {
     cursor: pointer;

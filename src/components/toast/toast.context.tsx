@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { ToastProps } from '../../modules/components/toast/toast';
+import { ToastProps } from './toast';
 
 export type ToastContextType = {
   open: (props: ToastProps) => void;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useTimeout } from '../../../hooks/useTimeout';
+import { useTimeout } from '../../hooks/useTimeout';
 import { ToastCloseContainer, ToastContainer, ToastIcon, ToastIconClose, ToastIconContainer, ToastTextContainer } from './toast.style';
 
 export interface ToastProps {

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { COLOR } from './../../styles/theme/colors.theme';
+import { COLOR } from '../../../styles/theme/colors.theme';
 
 export const BoxButton = styled.button`
   width: 100%;

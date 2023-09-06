@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import LoginViewer from '../../modules/viewes/login/login';
+import LoginViewer from '../../pages/login/login';
 import { AuthContext } from './auth.context';
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {

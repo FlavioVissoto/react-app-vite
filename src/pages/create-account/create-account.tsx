@@ -1,12 +1,17 @@
+import './../../extensions';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useNavigate } from 'react-router-dom';
 
 import { Form } from '../../components/Forms';
 import { Subtitle } from '../../components/subtitle/subtitle';
 import { Title } from '../../components/title/title';
-import { ValidatorCPF } from '../../shared/validators/cpf.validator';
+import { ToastContext } from '../../components/toast/toast.context';
+import { useAPIUser } from '../../hooks/useAPIUser';
+import { ErrorResponse } from '../../types/response/error.response';
+import { CreateAccountFormData, createAccountFormSchema } from './create-account.schema';
 import {
   BoxLogin,
   CreateAccountCard,
@@ -18,52 +23,11 @@ import {
   Terms,
 } from './create-account.style';
 
-const createAccountFormSchema = z
-  .object({
-    name: z.string().nonempty('Nome obrigatório'),
-    email: z
-      .string()
-      .nonempty('Email obrigatório')
-      .email('Formato invalido de email')
-      .refine(
-        async (value: string) => {
-          return true;
-        },
-        {
-          message: 'Email já cadastrado',
-        }
-      ),
-    cpf: z
-      .string()
-      .nonempty('CPF obrigatório')
-      .refine(
-        (value: string) => {
-          return ValidatorCPF(value);
-        },
-        {
-          message: 'CPF inválido',
-        }
-      ),
-    phone: z.string().nonempty('Telefone obrigatório'),
-    password: z.string().nonempty('Senha obrigatório').min(6, 'Mínimo de 6 caracteres'),
-    confirmPassword: z.string().nonempty('Senha obrigatório').min(6, 'Mínimo de 6 caracteres'),
-    terms: z.literal(true, {
-      errorMap: () => ({ message: 'Você deve aceitar os Termos e Condições' }),
-    }),
-  })
-  .refine(
-    (data) => {
-      return data.password === data.confirmPassword;
-    },
-    {
-      path: ['confirmPassword'],
-      message: 'As senhas não conferem',
-    }
-  );
-
-type CreateAccountFormData = z.infer<typeof createAccountFormSchema>;
-
 const CreateAccount = () => {
+  const api = useAPIUser();
+  const toast = useContext(ToastContext);
+  const navigate = useNavigate();
+
   const createAccountForm = useForm<CreateAccountFormData>({
     resolver: zodResolver(createAccountFormSchema),
   });
@@ -75,13 +39,51 @@ const CreateAccount = () => {
   } = createAccountForm;
 
   const [showPass, setShowPass] = useState(false);
+  const [enableButtonCreate, setEnableButtonCreate] = useState(true);
+  const [buttonLoading, setLoadingButton] = useState(false);
 
   const handleShowPass = () => {
     setShowPass(!showPass);
   };
 
-  const createAccount = (data: any) => {
-    console.log(data);
+  console.log('RENDER');
+
+  const createAccount = async (data: CreateAccountFormData) => {
+    try {
+      setEnableButtonCreate(false);
+      setLoadingButton(true);
+      const response = await api.create({
+        cpf: data.cpf.onlyNumber(),
+        email: data.email,
+        lastname: data.lastname,
+        name: data.name,
+        pass: data.password,
+        phone: data.phone,
+      });
+      if (!response) {
+        toast.open({
+          content: `Houve um erro ao criar usuário. Favor tentar novamente`,
+          icon: 'error',
+        });
+        setEnableButtonCreate(true);
+        setLoadingButton(false);
+      }
+      toast.open({
+        content: 'Usuário criado com sucesso!',
+        icon: 'success',
+      });
+      navigate('/login');
+    } catch (error) {
+      if (error as ErrorResponse) {
+        toast.open({
+          content: `Houve um erro ao criar usuário. ${(error as Error).message}`,
+          icon: 'error',
+          timeout: 7000,
+        });
+      }
+      setEnableButtonCreate(true);
+      setLoadingButton(false);
+    }
   };
 
   return (
@@ -93,15 +95,29 @@ const CreateAccount = () => {
               <Title>Criar uma conta</Title>
               <Subtitle>Insira seus dados pessoais para criar uma conta</Subtitle>
 
-              <Form.FormGroup title="Nome" labelFor="name" error={{ show: errors.name ? true : false, message: errors.name?.message }}>
-                <Form.InputText
-                  {...register('name', { required: true })}
-                  name="name"
-                  id="name"
-                  type="text"
-                  placeholder="Seu nome"></Form.InputText>
-              </Form.FormGroup>
-
+              <InLineItens>
+                <Form.FormGroup title="Nome" labelFor="name" error={{ show: errors.name ? true : false, message: errors.name?.message }}>
+                  <Form.InputText
+                    {...register('name', { required: true })}
+                    name="name"
+                    id="name"
+                    type="text"
+                    capitalize={true}
+                    placeholder="Nome"></Form.InputText>
+                </Form.FormGroup>
+                <Form.FormGroup
+                  title="Sobrenome"
+                  labelFor="lastname"
+                  error={{ show: errors.name ? true : false, message: errors.name?.message }}>
+                  <Form.InputText
+                    {...register('lastname', { required: true })}
+                    name="lastname"
+                    id="lastname"
+                    type="text"
+                    capitalize={true}
+                    placeholder="Sobrenome"></Form.InputText>
+                </Form.FormGroup>
+              </InLineItens>
               <Form.FormGroup title="Email" labelFor="email" error={{ show: errors.email ? true : false, message: errors.email?.message }}>
                 <Form.InputText
                   {...register('email', { required: true })}
@@ -174,7 +190,7 @@ const CreateAccount = () => {
               </Form.FormGroup>
 
               <Form.FormGroup>
-                <Form.Button name="submit" color="blue" type="submit">
+                <Form.Button name="submit" color="blue" type="submit" showLoading={buttonLoading} enable={enableButtonCreate}>
                   Cadastrar
                 </Form.Button>
               </Form.FormGroup>

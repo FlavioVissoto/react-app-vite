@@ -1,9 +1,8 @@
 import { createContext } from 'react';
-
-import { User } from '../../types/user';
+import { UserLoginRequest } from '../../types/request/user/user-login.request';
 
 export type AuthContextType = {
-  user: User | null;
+  user: UserLoginRequest | null;
   signin: (email: string, pass: string) => Promise<boolean>;
   signout: () => void;
 };

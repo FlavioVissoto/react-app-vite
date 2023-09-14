@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-
 import { device } from '../../styles/theme/devices';
+import styled from 'styled-components';
 
 export const LoginCard = styled.div`
   min-height: 100vh;
@@ -81,6 +80,6 @@ export const BoxCreateAccount = styled.div`
 
   ${(x) => x.theme.fonts.size.sm}
   @media only screen and (${device.mobileL}) {
-    ${(x) => x.theme.fonts.size.base}
+    ${(x) => x.theme.fonts.size.md}
   }
 `;

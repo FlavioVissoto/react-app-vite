@@ -1,14 +1,17 @@
-import styled from 'styled-components';
-
 import { COLOR } from '../../../styles/theme/colors.theme';
+import styled from 'styled-components';
 
 export const BoxButton = styled.button`
   width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 
   padding: ${(x) => x.theme.size['2xs']} ${(x) => x.theme.size.md};
-  /* margin: ${(x) => x.theme.size['2xs']} ${(x) => x.theme.size['3xs']};
- */
   border-radius: ${(x) => x.theme.size['3xs']};
+
+  //${(x) => x.theme.fonts.size.md}
 
   cursor: pointer;
 
@@ -26,4 +29,20 @@ export const BoxButton = styled.button`
         'background-color': x.theme.colors.blue[300],
       },
     }};
+
+  :disabled {
+    cursor: not-allowed;
+  }
+`;
+
+export const ButtonText = styled.span`
+  ${(x) => x.theme.fonts.size.md}
+`;
+
+export const ContainerIcon = styled.div`
+  margin-right: ${(props) => props.theme.size['2xs']};
+`;
+
+export const Icon = styled.svg`
+  //height: ${(x) => x.theme.size['md']};
 `;

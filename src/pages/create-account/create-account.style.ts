@@ -11,8 +11,13 @@ export const CreateAccountForm = styled(LoginMain)``;
 
 export const InLineItens = styled.div`
   display: flex;
-  flex-direction: row;
-  column-gap: ${(x) => x.theme.size.md};
+  flex-direction: column;
+
+  @media only screen and (${device.tablet}) {
+    flex-direction: row;
+    /* column-gap: ${(x) => x.theme.size.md}; */
+  }
+  justify-content: space-between;
 `;
 
 export const InputPassContainer = styled.div`

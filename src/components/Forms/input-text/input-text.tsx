@@ -1,3 +1,5 @@
+import './../../../extensions';
+
 import React, { FC, InputHTMLAttributes, useCallback } from 'react';
 
 import CEPMask from '../../../shared/masks/cep.mask';
@@ -11,6 +13,8 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   children?: React.ReactNode;
   mask?: 'cpf' | 'cep' | 'currency' | 'phone';
   name: string;
+  capitalize?: boolean;
+  onlyLowerCase?: boolean;
 }
 
 const InputText: FC<InputProps> = React.forwardRef((props: InputProps, ref: any) => {
@@ -41,6 +45,14 @@ const InputText: FC<InputProps> = React.forwardRef((props: InputProps, ref: any)
           break;
         default:
           break;
+      }
+
+      if (props.capitalize) {
+        e.currentTarget.value = e.currentTarget.value.capitalize();
+      }
+
+      if (props.onlyLowerCase) {
+        e.currentTarget.value = e.currentTarget.value.toLocaleLowerCase();
       }
     },
     [props.mask]

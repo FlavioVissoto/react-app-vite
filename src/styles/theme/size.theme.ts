@@ -1,4 +1,4 @@
-import { ObjectValues } from '../../../shared/object-values';
+import { ObjectValues } from '../../shared/object-values';
 
 export const sizeName = {
   '3xs': '3xs',

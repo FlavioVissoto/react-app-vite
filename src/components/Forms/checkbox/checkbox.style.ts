@@ -5,7 +5,7 @@ export const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
   gap: ${(x) => x.theme.size['2xs']};
-  ${(x) => x.theme.fonts.size.base}
+  ${(x) => x.theme.fonts.size.md}
 `;
 
 export const BoxCheckbox = styled.input`

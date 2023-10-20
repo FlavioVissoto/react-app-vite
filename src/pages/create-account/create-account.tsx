@@ -11,7 +11,7 @@ import { Title } from '../../components/title/title';
 import { ToastContext } from '../../components/toast/toast.context';
 import { useAPIUser } from '../../hooks/useAPIUser';
 import { ErrorResponse } from '../../types/response/error.response';
-import { CreateAccountFormData, createAccountFormSchema } from './create-account.schema';
+import { createAccountFormSchema, CreateAccountFormType } from './create-account.schema';
 import {
   BoxLogin,
   CreateAccountCard,
@@ -28,7 +28,7 @@ const CreateAccount = () => {
   const toast = useContext(ToastContext);
   const navigate = useNavigate();
 
-  const createAccountForm = useForm<CreateAccountFormData>({
+  const createAccountForm = useForm<CreateAccountFormType>({
     resolver: zodResolver(createAccountFormSchema),
   });
 
@@ -46,9 +46,7 @@ const CreateAccount = () => {
     setShowPass(!showPass);
   };
 
-  console.log('RENDER');
-
-  const createAccount = async (data: CreateAccountFormData) => {
+  const createAccount = async (data: CreateAccountFormType) => {
     try {
       setEnableButtonCreate(false);
       setLoadingButton(true);

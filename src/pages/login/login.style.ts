@@ -1,5 +1,6 @@
-import { device } from '../../styles/theme/devices';
 import styled from 'styled-components';
+
+import { device } from '../../styles/theme/devices';
 
 export const LoginCard = styled.div`
   min-height: 100vh;
@@ -29,7 +30,7 @@ export const LoginContent = styled.div`
   }
 `;
 
-export const LoginMain = styled.form`
+export const LoginForm = styled.form`
   margin-bottom: ${(x) => x.theme.size.md};
 `;
 
@@ -82,4 +83,10 @@ export const BoxCreateAccount = styled.div`
   @media only screen and (${device.mobileL}) {
     ${(x) => x.theme.fonts.size.md}
   }
+`;
+
+export const InLineItens = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;

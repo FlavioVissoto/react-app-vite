@@ -1,8 +1,7 @@
 import './../../extensions';
 
-import { z } from 'zod';
-
 import { ValidatorCPF } from '../../shared/validators/cpf.validator';
+import { z } from 'zod';
 
 export const createAccountFormSchema = z
   .object({
@@ -58,4 +57,4 @@ export const createAccountFormSchema = z
     }
   );
 
-export type CreateAccountFormData = z.infer<typeof createAccountFormSchema>;
+export type CreateAccountFormType = z.infer<typeof createAccountFormSchema>;

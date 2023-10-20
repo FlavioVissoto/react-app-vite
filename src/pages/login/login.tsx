@@ -1,31 +1,31 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 
 import { Form } from '../../components/Forms';
-import { Line } from '../../components/line/line';
 import { Subtitle } from '../../components/subtitle/subtitle';
 import { Title } from '../../components/title/title';
 import { ToastContext } from '../../components/toast/toast.context';
+import { LocalStorageConstants } from '../../constants/localstorage.constants';
 import { AuthContext } from '../../contexts/auth/auth.context';
-import { BoxCreateAccount, BoxPassword, BoxSocial, InputPass, LoginCard, LoginContent, LoginMain, ShowPassword } from './login.style';
-
-const createLoginFormSchema = z.object({
-  email: z.string().nonempty('Email obrigatório').email('Formato de email inválido').toLowerCase(),
-  pass: z.string().min(6, 'A senha precisa no mínimo 6 caracteres'),
-});
-
-type CreateLoginFormData = z.infer<typeof createLoginFormSchema>;
+import { useAPIUser } from '../../hooks/useAPIUser';
+import { useStorage } from '../../hooks/useStorage';
+import { ErrorResponse } from '../../types/response/error.response';
+import { LoginFormSchema, LoginFormType } from './login.schema';
+import { BoxCreateAccount, BoxPassword, InLineItens, InputPass, LoginCard, LoginContent, LoginForm, ShowPassword } from './login.style';
 
 const LoginViewer = () => {
   const toast = useContext(ToastContext);
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const api = useAPIUser();
 
-  const loginForm = useForm<CreateLoginFormData>({
-    resolver: zodResolver(createLoginFormSchema),
+  const [tokenStorage, setTokenStorage] = useStorage(LocalStorageConstants.user.token, null);
+  const [credentialsStorage, setCredentialsStorage] = useStorage<LoginFormType | null>(LocalStorageConstants.user.credentials, null);
+
+  const loginForm = useForm<LoginFormType>({
+    resolver: zodResolver(LoginFormSchema),
   });
 
   const {
@@ -34,10 +34,64 @@ const LoginViewer = () => {
     formState: { errors },
   } = loginForm;
 
+  const [enableButtonLogin, setEnableButtonLogin] = useState(true);
+  const [buttonLoading, setLoadingButton] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
-  const createLogin = (data: any) => {
-    console.log(data);
+  useEffect(() => {
+    getStorageCredentials();
+  }, []);
+
+  const getStorageCredentials = () => {
+    if (credentialsStorage && credentialsStorage.email) {
+      loginForm.setValue('email', credentialsStorage.email);
+      loginForm.setValue('password', credentialsStorage.password);
+      loginForm.setValue('rememberpass', credentialsStorage.rememberpass);
+    }
+  };
+
+  const createLogin = async (data: LoginFormType) => {
+    try {
+      setLoadingButton(true);
+      setEnableButtonLogin(false);
+
+      const response = await api.signin({
+        email: data.email,
+        pass: data.password,
+      });
+
+      toast.open({
+        content: 'Login realizado com sucesso! Redirecionando...',
+        icon: 'success',
+        timeout: 7000,
+      });
+
+      setLoadingButton(false);
+
+      if (data.rememberpass) {
+        setCredentialsStorage(data);
+      } else {
+        setCredentialsStorage(null);
+      }
+    } catch (err) {
+      if (err as ErrorResponse) {
+        let message = '';
+
+        if ((err as ErrorResponse).message == 'Unauthorized') {
+          message = 'Login/Senha inválidos';
+        } else {
+          message = `Houve um erro ao criar usuário. ${(err as Error).message}`;
+        }
+
+        toast.open({
+          content: message,
+          icon: 'error',
+          timeout: 7000,
+        });
+      }
+      setLoadingButton(false);
+      setEnableButtonLogin(true);
+    }
   };
 
   const handleShowPass = () => {
@@ -49,50 +103,57 @@ const LoginViewer = () => {
       <LoginCard>
         <LoginContent>
           <FormProvider {...loginForm}>
-            <LoginMain onSubmit={handleSubmit(createLogin)}>
+            <LoginForm onSubmit={handleSubmit(createLogin)}>
               <Title>Faça o login da conta</Title>
               <Subtitle>Informe seu email e senha para acessar</Subtitle>
 
-              <Form.FormGroup title="Endereço de email" labelFor="email">
+              <Form.FormGroup
+                title="Endereço de email"
+                labelFor="email"
+                error={{ show: errors.email ? true : false, message: errors.email?.message }}>
                 <Form.InputText
                   {...register('email', { required: true })}
                   name="email"
                   id="email"
                   type="email"
-                  placeholder="email@seuemail.com"></Form.InputText>
-                {/* {errors.email && <span>{errors.email.message}</span>} */}
+                  placeholder="email@email.com"></Form.InputText>
               </Form.FormGroup>
 
-              <Form.FormGroup title="Senha" labelFor="pass">
+              <Form.FormGroup
+                title="Senha"
+                labelFor="password"
+                error={{ show: errors.password ? true : false, message: errors.password?.message }}>
                 <InputPass>
                   <Form.InputText
-                    {...register('pass')}
-                    name="pass"
-                    id="pass"
+                    {...register('password')}
+                    name="password"
+                    id="password"
                     type={showPass ? 'text' : 'password'}
                     placeholder="*********"></Form.InputText>
                   <ShowPassword>
                     <span onClick={handleShowPass}>{showPass ? 'Ocultar' : 'Mostrar'}</span>
                   </ShowPassword>
-                  {/* {errors.pass && <span>{errors.pass.message}</span>} */}
                 </InputPass>
               </Form.FormGroup>
 
-              <Form.FormGroup>
-                <BoxPassword>
-                  {/* <Form.Checkbox id="rememberPassword" label="Lembrar senha"></Form.Checkbox> */}
-                  <Form.Link href="#">Esqueceu a senha?</Form.Link>
-                </BoxPassword>
-              </Form.FormGroup>
+              <InLineItens>
+                <Form.Checkbox id="rememberpass" label="Salvar senha" {...register('rememberpass')}></Form.Checkbox>
+                <Form.FormGroup>
+                  <BoxPassword>
+                    <Form.Link href="#">Esqueceu a senha?</Form.Link>
+                  </BoxPassword>
+                </Form.FormGroup>
+              </InLineItens>
 
               <Form.FormGroup>
-                <Form.Button name="acessar" color="blue" type="submit">
+                <Form.Button name="acessar" color="blue" type="submit" showLoading={buttonLoading} enable={enableButtonLogin}>
                   Acessar
                 </Form.Button>
               </Form.FormGroup>
-            </LoginMain>
+            </LoginForm>
           </FormProvider>
-          <Line title="Acesse usando" />
+
+          {/* <Line title="Acesse usando" />
 
           <BoxSocial>
             <Form.Button name="google" color="blue">
@@ -104,7 +165,7 @@ const LoginViewer = () => {
             <Form.Button name="twitter" color="blue">
               Twitter
             </Form.Button>
-          </BoxSocial>
+          </BoxSocial> */}
 
           <BoxCreateAccount>
             Não tem uma conta? <Form.Link href="/create-account">Crie uma conta</Form.Link>

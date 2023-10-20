@@ -10,11 +10,11 @@ const Checkbox: FC<CheckboxPropsType> = React.forwardRef<HTMLInputElement, Check
   (props: CheckboxPropsType, ref: React.ForwardedRef<HTMLInputElement>) => {
     return (
       <CheckboxContainer>
-        <BoxCheckbox type="checkbox" ref={ref} {...props} id={props.id} />
+        <BoxCheckbox type="checkbox" ref={ref} {...props} />
         <Label htmlFor={props.id}>{props.label}</Label>
       </CheckboxContainer>
     );
-  }
+  },
 );
 
 Checkbox.displayName = 'CheckboxComponent';

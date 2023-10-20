@@ -24,7 +24,13 @@ module.exports = {
     amd: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'prettier',
+  ],
   plugins: ['simple-import-sort', 'prettier'],
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],

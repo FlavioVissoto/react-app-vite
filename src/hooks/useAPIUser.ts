@@ -14,9 +14,17 @@ export const useAPIUser = () => ({
     return response.data;
   },
 
-  signin: async (email: string, pass: string): Promise<UserLoginRequest | null> => {
-    const response = await api.post<UserLoginRequest>('/signin', { email, pass });
-    return response.data ?? null;
+  signin: async (request: UserLoginRequest): Promise<UserLoginRequest | null> => {
+    try {
+      const response = await api.post<UserLoginRequest>('/signin', { email: request.email, pass: request.pass });
+      return response.data ?? null;
+    } catch (error) {
+      if (axios.isAxiosError<ErrorResponse, Record<string, unknown>>(error)) {
+        throw error.response?.data;
+      } else {
+        throw error;
+      }
+    }
   },
 
   logout: async (): Promise<null> => {

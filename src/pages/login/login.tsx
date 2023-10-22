@@ -9,7 +9,6 @@ import { Title } from '../../components/title/title';
 import { ToastContext } from '../../components/toast/toast.context';
 import { LocalStorageConstants } from '../../constants/localstorage.constants';
 import { AuthContext } from '../../contexts/auth/auth.context';
-import { useAPIUser } from '../../hooks/useAPIUser';
 import { useStorage } from '../../hooks/useStorage';
 import { ErrorResponse } from '../../types/response/error.response';
 import { LoginFormSchema, LoginFormType } from './login.schema';
@@ -19,13 +18,16 @@ const LoginViewer = () => {
   const toast = useContext(ToastContext);
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-  const api = useAPIUser();
 
-  const [tokenStorage, setTokenStorage] = useStorage(LocalStorageConstants.user.token, null);
-  const [credentialsStorage, setCredentialsStorage] = useStorage<LoginFormType | null>(LocalStorageConstants.user.credentials, null);
+  const [credentialsStorage, setCredentialsStorage] = useStorage<LoginFormType>(LocalStorageConstants.user.credentials);
 
   const loginForm = useForm<LoginFormType>({
     resolver: zodResolver(LoginFormSchema),
+    values: {
+      email: 'vissoto_flavio@hotmail.com',
+      password: '123456',
+      rememberpass: true,
+    } as LoginFormType,
   });
 
   const {
@@ -55,24 +57,24 @@ const LoginViewer = () => {
       setLoadingButton(true);
       setEnableButtonLogin(false);
 
-      const response = await api.signin({
-        email: data.email,
-        pass: data.password,
-      });
+      const response = await auth.signin(data.email, data.password);
 
-      toast.open({
-        content: 'Login realizado com sucesso! Redirecionando...',
-        icon: 'success',
-        timeout: 7000,
-      });
-
-      setLoadingButton(false);
+      if (response) {
+        toast.open({
+          content: 'Login realizado com sucesso! Redirecionando...',
+          icon: 'success',
+          timeout: 7000,
+        });
+        setLoadingButton(false);
+      }
 
       if (data.rememberpass) {
+        console.log(data);
         setCredentialsStorage(data);
       } else {
-        setCredentialsStorage(null);
+        setCredentialsStorage(undefined);
       }
+      navigate('/home');
     } catch (err) {
       if (err as ErrorResponse) {
         let message = '';

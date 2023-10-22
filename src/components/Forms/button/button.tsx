@@ -1,8 +1,8 @@
-import { BoxButton, ButtonText, ContainerIcon, Icon } from './button.style';
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 
 import { AnimateSpin } from '../../../styles/animate.style';
 import { color } from '../../../styles/theme/colors.theme';
+import { BoxButton, ButtonText, ContainerIcon, Icon } from './button.style';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-import { UserCreateRequest, UserLoginRequest } from '../types/request';
+import { UserCreateRequest, UserLoginRequest, UserValidateTokenRequest } from '../types/request';
+import { BaseResponse } from '../types/response/base.response';
 import { ErrorResponse } from '../types/response/error.response';
+import { UserTokenResponse } from '../types/response/user';
 import { UserCreateResponse } from '../types/response/user/user-create.response';
 
 const api = axios.create({
@@ -9,15 +11,15 @@ const api = axios.create({
 });
 
 export const useAPIUser = () => ({
-  validadeToken: async (token: string) => {
-    const response = await api.post('/validate', token);
+  validadeToken: async (token: UserValidateTokenRequest): Promise<boolean> => {
+    const response = await api.post<boolean>('/validatetoken', token);
     return response.data;
   },
 
-  signin: async (request: UserLoginRequest): Promise<UserLoginRequest | null> => {
+  signin: async (request: UserLoginRequest): Promise<UserTokenResponse | null> => {
     try {
-      const response = await api.post<UserLoginRequest>('/signin', { email: request.email, pass: request.pass });
-      return response.data ?? null;
+      const response = await api.post<BaseResponse<UserTokenResponse>>('/signin', { email: request.email, pass: request.pass });
+      return response.data.data ?? null;
     } catch (error) {
       if (axios.isAxiosError<ErrorResponse, Record<string, unknown>>(error)) {
         throw error.response?.data;

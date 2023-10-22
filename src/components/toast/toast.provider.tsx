@@ -44,7 +44,7 @@ export const ToastProvider = ({ children }: { children: JSX.Element }) => {
             <Toast key={x.id} content={x.content} close={() => close(x.id)} timeout={x.timeout} icon={x.icon}></Toast>
           ))}
         </ToastWrapper>,
-        document.body
+        document.body,
       )}
     </ToastContext.Provider>
   );

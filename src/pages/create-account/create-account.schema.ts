@@ -1,7 +1,7 @@
-import './../../extensions';
+import { z } from 'zod';
 
 import { ValidatorCPF } from '../../shared/validators/cpf.validator';
-import { z } from 'zod';
+import './../../extensions';
 
 export const createAccountFormSchema = z
   .object({
@@ -27,7 +27,7 @@ export const createAccountFormSchema = z
         },
         {
           message: 'Email já cadastrado',
-        }
+        },
       ),
     cpf: z
       .string()
@@ -38,7 +38,7 @@ export const createAccountFormSchema = z
         },
         {
           message: 'CPF inválido',
-        }
+        },
       ),
     phone: z.string().nonempty('Telefone obrigatório'),
     password: z.string().nonempty('Senha obrigatório').min(6, 'Mínimo de 6 caracteres'),
@@ -54,7 +54,7 @@ export const createAccountFormSchema = z
     {
       path: ['confirmPassword'],
       message: 'As senhas não conferem',
-    }
+    },
   );
 
 export type CreateAccountFormType = z.infer<typeof createAccountFormSchema>;

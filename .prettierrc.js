@@ -11,4 +11,6 @@ module.exports = {
   endOfLine: 'auto',
   code: 140,
   jsxSingleQuote: false,
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
 };

@@ -23,32 +23,40 @@ const decryptValue = <T>(value: string | null): T | null => {
   }
 };
 
-export const useStorage = <T>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
-  const [value, setValue] = useState<T>(decryptValue(localStorage.getItem(key)) || initialValue);
+const parseJSON = <T>(value: string | null): T | undefined => {
+  try {
+    return value === 'undefined' ? undefined : JSON.parse(value ?? '');
+  } catch (error) {
+    console.log('Parsing erro on', { value });
+    return undefined;
+  }
+};
+
+export const useStorage = <T>(
+  key: string,
+  initialValue: T | undefined = undefined,
+): readonly [T | undefined, React.Dispatch<React.SetStateAction<T | undefined>>] => {
+  const [value, setValue] = useState<T | undefined>(() => {
+    const valueFromStorage = localStorage.getItem(key);
+
+    if (valueFromStorage) {
+      return JSON.parse(valueFromStorage);
+    }
+
+    return initialValue;
+  });
 
   useEffect(() => {
-    if (key) {
-      setValueLocal(key, value);
-    } else {
-      removeValue(key);
+    if (value) {
+      localStorage.setItem(key, JSON.stringify(value));
     }
   }, [value]);
 
   useEffect(() => {
-    setValueLocal(key, value);
+    if (value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   }, []);
 
-  const setValueLocal = (key: string, value: T): void => {
-    if (value) {
-      localStorage.setItem(key, encryptValue(value));
-    } else {
-      removeValue(key);
-    }
-  };
-
-  const removeValue = (key: string): void => {
-    localStorage.removeItem(key);
-  };
-
-  return [value, setValue];
+  return [value, setValue] as const;
 };

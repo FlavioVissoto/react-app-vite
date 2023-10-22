@@ -1,11 +1,10 @@
-import './../../../extensions';
-
 import React, { FC, InputHTMLAttributes, useCallback } from 'react';
 
 import CEPMask from '../../../shared/masks/cep.mask';
 import CPFMask from '../../../shared/masks/cpf.mask';
 import CurrencyMask from '../../../shared/masks/currency.mask';
 import PhoneMask from '../../../shared/masks/phone.mask';
+import './../../../extensions';
 import { BoxInputText } from './input-text.style';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -34,7 +33,7 @@ const InputText: FC<InputProps> = React.forwardRef((props: InputProps, ref: any)
           break;
       }
     },
-    [props.mask]
+    [props.mask],
   );
 
   const handleBlur = useCallback(
@@ -55,7 +54,7 @@ const InputText: FC<InputProps> = React.forwardRef((props: InputProps, ref: any)
         e.currentTarget.value = e.currentTarget.value.toLocaleLowerCase();
       }
     },
-    [props.mask]
+    [props.mask],
   );
 
   return (

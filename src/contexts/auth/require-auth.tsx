@@ -1,13 +1,10 @@
 import { useContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { AuthContext } from './auth.context';
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const auth = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  console.log(auth);
 
   if (!auth.user) {
     if (window.location.pathname != '/login') {

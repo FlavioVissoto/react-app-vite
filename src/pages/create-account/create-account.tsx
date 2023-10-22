@@ -1,5 +1,3 @@
-import './../../extensions';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useContext, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,7 +9,8 @@ import { Title } from '../../components/title/title';
 import { ToastContext } from '../../components/toast/toast.context';
 import { useAPIUser } from '../../hooks/useAPIUser';
 import { ErrorResponse } from '../../types/response/error.response';
-import { createAccountFormSchema, CreateAccountFormType } from './create-account.schema';
+import './../../extensions';
+import { CreateAccountFormType, createAccountFormSchema } from './create-account.schema';
 import {
   BoxLogin,
   CreateAccountCard,
